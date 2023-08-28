@@ -4,7 +4,7 @@ import FormItem from 'antd/es/form/FormItem';
 import TextArea from 'antd/es/input/TextArea';
 import React, { useState } from 'react';
 
-function EditPost({ post }) {
+function EditPost({ post, onDelete, onSave }) {
     const [editStatus, setEditStatus] = useState(false);
     const [infoPost,setPost] = useState({...post});
     const toggleEditStatus =() => setEditStatus(!editStatus);
@@ -18,13 +18,13 @@ function EditPost({ post }) {
     };
 
     const onSubmitEdit =() => {
-        alert("I will edit this post");
         toggleEditStatus();
+        onSave(infoPost);
     };
 
     const deletePost =() => {
-        alert("I Will delete this post");
         toggleEditStatus();
+        onDelete(infoPost.id);
     };
 
     return (

@@ -1,8 +1,15 @@
 import { CommentOutlined, HeartOutlined } from '@ant-design/icons';
-import React from 'react';
+import React, { useContext } from 'react';
 import EditPost from './EditPost';
+import { UserContext } from '../../../context/useAuth';
 
-function Post({ post }) {
+function Post({ post,onSave,onDelete }) {
+    const userConnection = useContext(UserContext);
+
+    const isMine = ()=>{
+        return post.user.id === userConnection.getId();
+    }
+    
     return (
         <div className='rounded-[15px] bg-white md:w-[700px] min-m:w-full p-5 mx-auto my-4 shadow-md'>
             <div className="flex items-start w-full gap-3 justify-between">
@@ -13,7 +20,7 @@ function Post({ post }) {
                         <p className='text-[14px] font-bold text-[rgba(0,0,0,.7)]'>{post.createdAt.split("T")[0]}</p>
                     </div>
                 </div>
-                <EditPost post={post}/>
+                {isMine() && <EditPost onSave={onSave} onDelete={onDelete} post={post}/>}
             </div>
             <hr className='bg-[rgba(0,0,0,.3)] my-2 h-[2px]' />
             <h2 className='my-1 font-bold text-gray-700'>{post.title}</h2>
