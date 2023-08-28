@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { NotFound, Signin, Signup, Home } from './pages';
 import PrivateRoute from './utils/PrivateRoute';
+import OnlyPublic from './utils/OnlyPublic';
 
 function Router() {
     return (
@@ -11,8 +12,16 @@ function Router() {
                     <Home />
                 </PrivateRoute>
             }/>
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/signin' element={<Signin />} />
+            <Route path='/signup' element={
+                <OnlyPublic>
+                    <Signup />
+                </OnlyPublic>
+            }/>
+            <Route path='/signin' element={
+                <OnlyPublic>
+                    <Signin/>
+                </OnlyPublic>
+            }/>
             <Route path='*' element={<NotFound />} />
         </Routes>
     );
