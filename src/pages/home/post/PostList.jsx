@@ -4,30 +4,30 @@ import { HEADERS, get } from '../../../utils';
 import { message } from 'antd';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import CreatePost from './CreatePost';
 
 function PostList() {
     const [postList, setPostList] = useState([]);
 
-    const onDelete =(id)=>{
-        message.error("This fonctionnality is not disponible",3);
-    }
+    const onDelete = (id) => {
+        message.error("This fonctionnality is not disponible", 3);
+    };
 
-    const onUpdate =(post)=>{
-        axios.put("/posts",post,{
-            headers:{
+    const onUpdate = (info) => {
+        axios.put("/posts", info, {
+            headers: {
                 ...HEADERS,
                 Authorization: `Bearer ${Cookies.get('token')}`
             }
         })
-        .then(response=>{
-            message.success("Edit success",3);
-            setPostList([...postList].map(el=>el.id === post.id ? {
-                ...el,
-                content: response.data.content,
-                title: response.data.title
-            } : el));
-        })
-    }
+            .then(response => {
+                message.success("Success", 3);
+                if(!info.userId){
+                    setPostList([...postList].map(el=>el.id === info.id ? response.data : el));
+                }
+                setPostList([...postList,response.data]);
+            })
+    };
 
     useEffect(() => {
         get("/posts")
@@ -40,7 +40,8 @@ function PostList() {
 
     return (
         <>
-            {postList.map(el => <Post key={el.id} post={el} onSave={onUpdate} onDelete={onDelete} />)}
+            <CreatePost onAdd={onUpdate} />
+            {[...postList].reverse().map(el => <Post key={el.id} post={el} onSave={onUpdate} onDelete={onDelete} />)}
         </>
     );
 }

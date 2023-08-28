@@ -2,14 +2,16 @@ import { EditOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import TextArea from 'antd/es/input/TextArea';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { UserContext } from '../../../context/useAuth';
 
-function EditPost({ post, onDelete, onSave }) {
+function EditPost({ post, isCreate = false, onDelete, onSave }) {
     const [editStatus, setEditStatus] = useState(false);
-    const [infoPost,setPost] = useState({...post});
-    const toggleEditStatus =() => setEditStatus(!editStatus);
+    const [infoPost, setPost] = useState(post ? { ...post } : { title: '', content: '' });
+    const toggleEditStatus = () => setEditStatus(!editStatus);
+    const userConnection = useContext(UserContext);
 
-    const onChange =(event)=>{
+    const onChange = (event) => {
         const { name, value } = event.target;
         setPost({
             ...infoPost,
@@ -17,12 +19,15 @@ function EditPost({ post, onDelete, onSave }) {
         });
     };
 
-    const onSubmitEdit =() => {
+    const onSubmitEdit = () => {
         toggleEditStatus();
-        onSave(infoPost);
+        if (isCreate)
+            onSave({...infoPost, userId: userConnection.getId()});
+        else
+            onSave(infoPost);
     };
 
-    const deletePost =() => {
+    const deletePost = () => {
         toggleEditStatus();
         onDelete(infoPost.id);
     };
@@ -37,14 +42,14 @@ function EditPost({ post, onDelete, onSave }) {
                 open={editStatus}
                 footer={
                     <div className='w-full flex justify-between'>
-                        <Button onClick={deletePost} type='link' danger size='medium' className='border-red-600'>Delete this post</Button>,
+                        {!isCreate && <Button onClick={deletePost} type='link' danger size='medium' className='border-red-600'>Delete this post</Button>},
                         <div className='flex md:gap-[5px] min-m:gap-[2px]'>
                             <Button onClick={toggleEditStatus} type='primary' size='medium' className='bg-blue-500'>Cancel</Button>,
                             <Button onClick={onSubmitEdit} type='primary' size='medium' className='bg-blue-500'>Save</Button>
                         </div>
                     </div>
                 }
-                title={"Edit Post"}
+                title={isCreate ? "Create Post " : "Edit Post"}
             >
                 <Form onFinish={onSubmitEdit} initialValues={infoPost}>
                     <FormItem name='title' label='Title'>
@@ -64,7 +69,7 @@ function EditPost({ post, onDelete, onSave }) {
                             onChange={onChange}
                             name='content'
                             required={true}
-                            className='p-3' 
+                            className='p-3'
                             rows={5}
                             placeholder='Publication Content'
                             value={infoPost.content}

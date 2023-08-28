@@ -28,11 +28,11 @@ function Post({ post,onSave,onDelete }) {
             <div className='flex gap-5 mt-2'>
                 <div className='flex text-black-gray gap-2 items-center hover:bg-slate-200 rounded-[15px] px-7 py-1 hover:text-red-500 cursor-pointer'>
                     <HeartOutlined />
-                    <p>{post._count.reactions} liked on this page</p>
+                    {/* <p>{post._count.reactions} liked on this page</p> */}
                 </div>
                 <div className='flex text-black-gray gap-2 items-center hover:bg-slate-200 rounded-[15px] px-5 py-1 hover:text-red-500 cursor-pointer'>
                     <CommentOutlined />
-                    <p>{post._count.comments} comments on this page</p>
+                    {/* <p>{post._count.comments} comments on this page</p> */}
                 </div>
             </div>
         </div>
