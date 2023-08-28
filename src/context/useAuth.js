@@ -28,9 +28,9 @@ export function AuthProvider({ children }) {
     }
 
     const logout = () => {
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
         setUser(null);
-        Cookies.set('user', '');
-        Cookies.set('token', '');
     };
 
     return (

@@ -5,6 +5,7 @@ import { message } from 'antd';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import CreatePost from './CreatePost';
+import { v4 as uuid } from 'uuid';
 
 function PostList() {
     const [postList, setPostList] = useState([]);
@@ -41,7 +42,7 @@ function PostList() {
     return (
         <>
             <CreatePost onAdd={onUpdate} />
-            {[...postList].reverse().map(el => <Post key={el.id} post={el} onSave={onUpdate} onDelete={onDelete} />)}
+            {[...postList].reverse().map(el => <Post key={uuid()} postValue={el} onSave={onUpdate} onDelete={onDelete} />)}
         </>
     );
 }

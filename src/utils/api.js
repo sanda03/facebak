@@ -7,7 +7,7 @@ export const HEADERS = {
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
 };
 
-export function post(url,body,token = '') {
+export function post(url,body,token = 'token') {
     return axios.post(url,body,{
         headers:{
             ...HEADERS,
