@@ -22,6 +22,7 @@ function Navbar() {
                         :
                         <>
                             <li><Link to={"/"}>Home</Link></li>
+                            <li><Link to={"/profile"}>Profile</Link></li>
                             <li onClick={logout} className='cursor-pointer'>Logout</li>
                         </>
                 }

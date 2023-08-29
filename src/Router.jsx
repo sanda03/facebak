@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { NotFound, Signin, Signup, Home } from './pages';
 import PrivateRoute from './utils/PrivateRoute';
 import OnlyPublic from './utils/OnlyPublic';
+import Profile from './pages/profile/Profile';
 
 function Router() {
     return (
@@ -10,6 +11,11 @@ function Router() {
             <Route path='/' element={
                 <PrivateRoute>
                     <Home />
+                </PrivateRoute>
+            }/>
+            <Route path='/profile' element={
+                <PrivateRoute>
+                    <Profile/>
                 </PrivateRoute>
             }/>
             <Route path='/signup' element={

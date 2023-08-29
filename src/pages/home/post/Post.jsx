@@ -67,7 +67,7 @@ function Post({ postValue, onSave, onDelete }) {
                         <p className='text-[14px] font-bold text-[rgba(0,0,0,.7)]'>{postValue.createdAt.split("T")[0]}</p>
                     </div>
                 </div>
-                {isMine() && <EditPost onSave={onSave} onDelete={onDelete} postValue={postValue} />}
+                {isMine() && <EditPost onSave={onSave} onDelete={onDelete} post={postValue} />}
             </div>
             <hr className='bg-[rgba(0,0,0,.3)] my-2 h-[2px]' />
             <h2 className='my-1 font-bold text-gray-700'>{postValue.title}</h2>
